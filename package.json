@@ -1,0 +1,19 @@
+{
+  "name": "react-native-image-viewer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fenglu09/react-native-image-viewer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fenglu09/react-native-image-viewer/issues"
+  },
+  "homepage": "https://github.com/fenglu09/react-native-image-viewer#readme"
+}
