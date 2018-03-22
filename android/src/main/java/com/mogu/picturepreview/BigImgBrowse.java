@@ -213,8 +213,10 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
     @Override
     public void close_view() {
-        ((Activity) mContext).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+
     }
 
     OnPageChangeListener pageChange = new OnPageChangeListener() {
