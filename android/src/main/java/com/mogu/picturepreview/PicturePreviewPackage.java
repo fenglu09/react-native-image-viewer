@@ -35,7 +35,7 @@ public class PicturePreviewPackage implements ReactPackage {
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
 
         return Arrays.<ViewManager>asList(
-                new PictureViewManager(reactContext)
+//                new PictureViewManager(reactContext)
         );
 
     }
