@@ -3,6 +3,7 @@ package com.mogu.picturepreview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 import android.app.Activity;
 
@@ -12,7 +13,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -49,21 +50,23 @@ public class PicturePreview extends ReactContextBaseJavaModule {
     public void openPreview(ReadableArray array,int index)
 
     {
-            Context context = getCurrentActivity();
-            initImageLoader(context);
+        Context context = getCurrentActivity();
+        initImageLoader(context);
 
 
-            String imgs[] = new String[array.size()];
-            for (int i = 0; i < imgs.length; i++) {
-                imgs[i] = array.getString(i);
-            }
+        String imgs[] = new String[array.size()];
+        for (int i = 0; i < imgs.length; i++) {
+            imgs[i] = array.getString(i);
 
-            Intent intent = new Intent(context, BigImgBrowse.class);
-            intent.putExtra("imgUrlArr", imgs);
-            intent.putExtra("currentIndex", index);
-            context.startActivity(intent);
-            ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            
+        }
+
+
+        Intent intent = new Intent(context, BigImgBrowse.class);
+        intent.putExtra("imgUrlArr", imgs);
+        intent.putExtra("currentIndex", index);
+        context.startActivity(intent);
+        ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
     }
 
 
@@ -81,9 +84,9 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context).threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
-                .diskCache(new UnlimitedDiscCache(cacheDir)) // Ӳ�̻���Ŀ¼
-                .diskCacheSize(50 * 1024 * 1024) // 50 Mb Ӳ�̻���Ŀ¼��С
-                .tasksProcessingOrder(QueueProcessingType.FIFO)// default
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .diskCacheSize(50 * 1024 * 1024)
+                .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .build();
 
         ImageLoader.getInstance().init(config);
