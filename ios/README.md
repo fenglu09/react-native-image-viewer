@@ -15,12 +15,14 @@ openPreview | imageData, index| 传入图片数组与起始预览值
 
 1. pod "MWPhotoBrowser"
 
-2. Pods -> Pods -> MWPhotoBrowser文件夹里修改`MWPhotoBrowserPrivate.h`文件第37行
+2. RCTImagePreview.xcodeproj -> Build Settings -> Framework Search Paths添加`"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser"`; Header Search Paths添加`"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser"`, `non-recursive`改成`recursive`
+
+3. Pods -> Pods -> MWPhotoBrowser文件夹里修改`MWPhotoBrowserPrivate.h`文件第37行
 ```
 UIBarButtonItem *_previousButton, *_nextButton, *_actionButton, *_doneButton, *_saveButton;
 ```
 
-3. Pods -> Pods -> MWPhotoBrowser文件夹里`MWPhotoBrowser.m`文件查找`if ([self.navigationController.viewControllers objectAtIndex:0] == self)`将if判断里面的代码替换为下面的
+4. Pods -> Pods -> MWPhotoBrowser文件夹里`MWPhotoBrowser.m`文件查找`if ([self.navigationController.viewControllers objectAtIndex:0] == self)`将if判断里面的代码替换为下面的
 ```
 // We're first on stack so show done button
 _doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonPressed:)];
@@ -42,13 +44,13 @@ _saveButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"保存",
 [_saveButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateHighlighted];
 self.navigationItem.rightBarButtonItem = _saveButton;
 ```
-4. 在`MWPhotoBrowser.m`文件191行后换行添加
+5. 在`MWPhotoBrowser.m`文件191行后换行添加
 ```
 UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(doTapChange)];
 tapGesture.numberOfTapsRequired = 1;
 [self.view addGestureRecognizer:tapGesture];
 ```
-5. 在`MWPhotoBrowser.m`文件```#pragma mark - Misc```后换行添加
+6. 在`MWPhotoBrowser.m`文件```#pragma mark - Misc```后换行添加
 ```
 -(void)doTapChange{
 [self dismissViewControllerAnimated:YES completion:nil];
@@ -81,6 +83,6 @@ tipLabel.alpha = 0.0;
 }
 ```
 
-6. 在`MWPhotoBrowser.m`文件查找```[self.navigationController.navigationBar setAlpha:alpha];```后注释
+7. 在`MWPhotoBrowser.m`文件查找```[self.navigationController.navigationBar setAlpha:alpha];```后注释
 
-7. 在`MWPhotoBrowser.m`文件查找```[[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];```后注释
+8. 在`MWPhotoBrowser.m`文件查找```[[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];```后注释
