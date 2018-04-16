@@ -86,3 +86,18 @@ tipLabel.alpha = 0.0;
 7. 在`MWPhotoBrowser.m`文件查找```[self.navigationController.navigationBar setAlpha:alpha];```后注释
 
 8. 在`MWPhotoBrowser.m`文件查找```[[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:animated ? UIStatusBarAnimationSlide : UIStatusBarAnimationNone];```后注释
+
+9.在`MWPhotoBrowser.m`文件查找```frameForPagingScrollView```方法并替换成以下内容
+```
+- (CGRect)frameForPagingScrollView {
+//    CGRect frame = self.view.bounds;// [[UIScreen mainScreen] bounds];
+//    frame.origin.x -= PADDING;
+//    frame.size.width += (2 * PADDING);
+
+CGRect frame = CGRectMake(0, getRectNavAndStatusHight , KScreenWidth, KScreenHeight - getRectNavAndStatusHight);
+frame.origin.x -= PADDING;
+frame.origin.y = getRectNavAndStatusHight / 2;
+frame.size.width += (2 * PADDING);
+return CGRectIntegral(frame);
+}
+```
