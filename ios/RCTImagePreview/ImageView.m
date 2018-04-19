@@ -31,11 +31,16 @@
     
     MWPhoto *main;
     
-    NSLog(@"%@",data);
-    
     for (int i = 0; i < data.count; i++) {
         
-        main = [MWPhoto photoWithURL:[NSURL URLWithString:data[i]]];
+        if ([data[i] hasPrefix:@"https://"] || [data[i] hasPrefix:@"http://"]) {
+
+            main = [MWPhoto photoWithURL:[NSURL URLWithString:data[i]]];
+            
+        } else {
+            UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:data[i]];
+            main = [MWPhoto photoWithImage:savedImage];
+        }
         
         [photo addObject:main];
     }
