@@ -101,3 +101,15 @@ frame.size.width += (2 * PADDING);
 return CGRectIntegral(frame);
 }
 ```
+并在```#define PADDING                  10"```后面添加
+```
+#define getRectNavAndStatusHight  self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height
+#define KScreenWidth  [UIScreen mainScreen].bounds.size.width
+#define KScreenHeight  [UIScreen mainScreen].bounds.size.height
+```
+
+10.在`MWPhotoBrowser.m`文件查找```self.title = [NSString stringWithFormat:@"%lu %@ %lu", (unsigned long)(_currentPageIndex+1), NSLocalizedString(@"of", @"Used in the context: 'Showing 1 of 3 items'"), (unsigned long)numberOfPhotos];```
+并替换成
+```
+self.title = [NSString stringWithFormat:@"%lu %@ %lu", (unsigned long)(_currentPageIndex+1), NSLocalizedString(@"/", @"Used in the context: 'Showing 1 of 3 items'"), (unsigned long)numberOfPhotos];
+```
