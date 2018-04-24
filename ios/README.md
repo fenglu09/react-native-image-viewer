@@ -35,6 +35,10 @@ _doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"取消"
 [_doneButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateHighlighted];
 self.navigationItem.leftBarButtonItem = _doneButton;
 
+NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+NSString *saveState = [user objectForKey:@"isShowSave"];
+
+if ([saveState isEqualToString:@"YES"]) {
 _saveButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"保存", nil) style:UIBarButtonItemStylePlain target:self action:@selector(saveButtonPressed:)];
 [_saveButton setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 [_saveButton setBackgroundImage:nil forState:UIControlStateNormal barMetrics:UIBarMetricsLandscapePhone];
@@ -43,6 +47,7 @@ _saveButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"保存",
 [_saveButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateNormal];
 [_saveButton setTitleTextAttributes:[NSDictionary dictionary] forState:UIControlStateHighlighted];
 self.navigationItem.rightBarButtonItem = _saveButton;
+}
 ```
 5. 在`MWPhotoBrowser.m`文件191行后换行添加
 ```
