@@ -23,13 +23,22 @@
 
 @implementation ImageView
 
--(void)getImageData:(NSArray *)data index:(CGFloat)num{
+-(void)getImageData:(NSArray *)data index:(CGFloat)num isShowSave:(BOOL)save{
     
     NSMutableArray *photo = [[NSMutableArray alloc] init];
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"imageData"];
     
     MWPhoto *main;
+    
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    
+    if (save) {
+        [user setObject:@"YES" forKey:@"isShowSave"];
+    }
+    else{
+        [user setObject:@"NO" forKey:@"isShowSave"];
+    }
     
     for (int i = 0; i < data.count; i++) {
         
