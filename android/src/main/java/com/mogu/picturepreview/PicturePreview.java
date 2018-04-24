@@ -47,7 +47,7 @@ public class PicturePreview extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void openPreview(ReadableArray array,int index)
+    public void openPreview(ReadableArray array,int index,boolean isShowSave)
 
     {
         Context context = getCurrentActivity();
@@ -64,6 +64,7 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         Intent intent = new Intent(context, BigImgBrowse.class);
         intent.putExtra("imgUrlArr", imgs);
         intent.putExtra("currentIndex", index);
+        intent.putExtra("isShowSave", isShowSave);
         context.startActivity(intent);
         ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
