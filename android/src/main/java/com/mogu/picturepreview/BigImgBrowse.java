@@ -61,6 +61,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     private static String fileName;
     private static ProgressDialog mSaveDialog = null;
 
+    boolean isShowSave;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -69,7 +70,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
         currentItem = getIntent().getIntExtra("currentIndex", 0);
         imgUrlArr = getIntent().getStringArrayExtra("imgUrlArr");
-
+        isShowSave = getIntent().getBooleanExtra("isShowSave",false);
 
         mPager = (ViewPager) findViewById(R.id.viewpager);
         ViewsMap = new HashMap<String, View>();
@@ -84,6 +85,12 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
         tv_close.setOnClickListener(MyListener);
         tv_num= (TextView) findViewById(R.id.tv_num);
         tv_num.setText(currentItem+1+"/"+imgUrlArr.length);
+
+        if(isShowSave){
+            tv_saveimg.setVisibility(View.VISIBLE);
+        }else{
+            tv_saveimg.setVisibility(View.GONE);
+        }
 
     }
 
