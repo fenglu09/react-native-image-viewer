@@ -10,6 +10,6 @@
 
 @interface ImageView : UIView
 
--(void)getImageData:(NSArray *)data index:(CGFloat)num isShowSave:(BOOL)save;
+-(void)getImageData:(NSArray *)data index:(CGFloat)num;
 
 @end
