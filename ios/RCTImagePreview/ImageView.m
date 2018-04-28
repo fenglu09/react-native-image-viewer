@@ -22,8 +22,7 @@
 @end
 
 @implementation ImageView
-
--(void)getImageData:(NSArray *)data index:(CGFloat)num{
+-(void)getImageData:(NSArray *)data index:(CGFloat)num isShowSave:(BOOL)save{
     
     NSMutableArray *photo = [[NSMutableArray alloc] init];
     
