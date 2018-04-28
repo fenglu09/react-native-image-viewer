@@ -113,8 +113,6 @@
     // If we subscribe to this method we must dismiss the view controller ourselves
     NSLog(@"Did finish modal presentation");
     
-//    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES
-//                                                                                       completion:nil];
     [[self getPresentedViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -243,6 +243,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35U7LBHYVV;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser\"/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -255,6 +257,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 35U7LBHYVV;
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser\"";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../ios/Pods/MWPhotoBrowser\"/**";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
