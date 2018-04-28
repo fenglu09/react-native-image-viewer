@@ -83,9 +83,19 @@
     
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
+    [[self getPresentedViewController] presentViewController:nc animated:YES completion:nil];
     
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:nc animated:YES completion:nil];
+}
+
+- (UIViewController *)getPresentedViewController {
     
+    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *topVC = appRootVC;
+    if (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    
+    return topVC;
 }
 
 #pragma mark - MWPhotoBrowserDelegate
@@ -110,8 +120,7 @@
     // If we subscribe to this method we must dismiss the view controller ourselves
     NSLog(@"Did finish modal presentation");
     
-    [[UIApplication sharedApplication].keyWindow.rootViewController dismissViewControllerAnimated:YES
-                                                                                       completion:nil];
+    [[self getPresentedViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 
