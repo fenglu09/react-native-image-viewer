@@ -23,22 +23,13 @@
 
 @implementation ImageView
 
--(void)getImageData:(NSArray *)data index:(CGFloat)num isShowSave:(BOOL)save{
+-(void)getImageData:(NSArray *)data index:(CGFloat)num{
     
     NSMutableArray *photo = [[NSMutableArray alloc] init];
     
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"imageData"];
     
     MWPhoto *main;
-    
-    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
-    
-    if (save) {
-        [user setObject:@"YES" forKey:@"isShowSave"];
-    }
-    else{
-        [user setObject:@"NO" forKey:@"isShowSave"];
-    }
     
     for (int i = 0; i < data.count; i++) {
         
@@ -48,6 +39,7 @@
             
         } else {
             UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:data[i]];
+            
             main = [MWPhoto photoWithImage:savedImage];
         }
         
@@ -80,15 +72,16 @@
     
     
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:_browser];
-    
+
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
+
     [[self getPresentedViewController] presentViewController:nc animated:YES completion:nil];
-    
 }
 
-- (UIViewController *)getPresentedViewController {
-    
+
+
+- (UIViewController *)getPresentedViewController
+{
     UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
     UIViewController *topVC = appRootVC;
     if (topVC.presentedViewController) {

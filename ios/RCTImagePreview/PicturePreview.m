@@ -14,11 +14,10 @@
 // 暴露模块
 RCT_EXPORT_MODULE()
 
-RCT_EXPORT_METHOD(openPreview:(NSArray *)message index:(CGFloat)interval isShowSave:(BOOL)save) {
+RCT_EXPORT_METHOD(openPreview:(NSArray *)message index:(CGFloat)interval) {
     dispatch_async(dispatch_get_main_queue(), ^{
         ImageView *test = [[ImageView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
-//        [test getImageData:message index:interval];
-        [test getImageData:message index:interval isShowSave:save];
+        [test getImageData:message index:interval];
         [[UIApplication sharedApplication].keyWindow addSubview:test];
     });
 }
