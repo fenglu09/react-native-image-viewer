@@ -31,6 +31,15 @@
     
     MWPhoto *main;
     
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    
+    if (save) {
+        [user setObject:@"YES" forKey:@"isShowSave"];
+    }
+    else{
+        [user setObject:@"NO" forKey:@"isShowSave"];
+    }
+    
     for (int i = 0; i < data.count; i++) {
         
         if ([data[i] hasPrefix:@"https://"] || [data[i] hasPrefix:@"http://"]) {
