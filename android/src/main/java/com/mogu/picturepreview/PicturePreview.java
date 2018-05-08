@@ -60,6 +60,9 @@ public class PicturePreview extends ReactContextBaseJavaModule {
 
         }
 
+        /*add by david model处理 start*/
+        activityhide((Activity)context);
+        /*add by david model处理 end*/
 
         Intent intent = new Intent(context, BigImgBrowse.class);
         intent.putExtra("imgUrlArr", imgs);
@@ -67,6 +70,33 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         intent.putExtra("isShowSave", isShowSave);
         context.startActivity(intent);
         ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+    }
+
+
+
+    public void activityhide(final Activity activity) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //此时已在主线程中，可以更新UI了
+                activity.setVisible(false);
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                //execute the task
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //此时已在主线程中，可以更新UI了
+                        activity.setVisible(true);
+                    }
+                });
+
+            }
+        }, 1000);
 
     }
 
