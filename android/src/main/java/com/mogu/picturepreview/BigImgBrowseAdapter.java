@@ -71,6 +71,13 @@ public class BigImgBrowseAdapter extends PagerAdapter {
 
         String newImgUrl = imgPathList[position];
 
+        /* add by david  ImageLoader未初始化处理 start*/
+        boolean isInit = ImageLoader.getInstance().isInited();
+        if (!isInit) {
+            if(context!=null)
+                ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context));
+        }
+        /* add by david  ImageLoader未初始化处理 end*/
         ImageLoader.getInstance().displayImage(newImgUrl, hy, options,
                 new ImageLoadingListener() {
                     @Override
