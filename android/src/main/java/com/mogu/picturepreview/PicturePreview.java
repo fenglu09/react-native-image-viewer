@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 import android.app.Activity;
+import android.os.Handler;
 
 
 import com.facebook.react.bridge.Promise;
