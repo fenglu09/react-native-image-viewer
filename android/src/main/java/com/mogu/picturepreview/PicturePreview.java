@@ -3,12 +3,9 @@ package com.mogu.picturepreview;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
-import android.util.Log;
-import android.widget.Toast;
+import android.os.Handler;
 import android.app.Activity;
 
-
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -17,7 +14,6 @@ import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.facebook.react.bridge.ReactApplicationContext;
 
 import java.io.File;
 
