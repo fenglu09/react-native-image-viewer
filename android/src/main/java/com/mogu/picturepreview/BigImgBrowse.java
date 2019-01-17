@@ -105,7 +105,10 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
             }
             if (v == tv_saveimg) {
                 String imgurl = imgUrlArr[currentItem];
-                saveImg(imgurl, "jpg");
+//                saveImg(imgurl, "jpg");
+                if(imgurl.startsWith("http")||imgurl.startsWith("https")){
+                    saveImg(imgurl, "jpg");
+                }
                 return;
             }
         }
