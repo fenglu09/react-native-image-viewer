@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
 import android.app.Activity;
+import android.os.Handler;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;

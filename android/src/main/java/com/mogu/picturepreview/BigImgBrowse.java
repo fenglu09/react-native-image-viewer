@@ -105,7 +105,12 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
             }
             if (v == tv_saveimg) {
                 String imgurl = imgUrlArr[currentItem];
-                saveImg(imgurl, "jpg");
+//                saveImg(imgurl, "jpg");
+                if(imgurl.startsWith("http")||imgurl.startsWith("https")){
+                    saveImg(imgurl, "jpg");
+                }else{
+                    Toast.makeText(com.mogu.picturepreview.BigImgBrowse.this,"该图片为本地图片,无需保存",0).show();
+                }
                 return;
             }
         }
