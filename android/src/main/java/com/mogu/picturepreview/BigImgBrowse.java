@@ -48,7 +48,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     public ZoomImageView hy1;
     boolean drag = true;
 
-    TextView tv_saveimg,tv_num;
+    TextView tv_saveimg, tv_num;
     ImageView tv_close;
 
     private static Context mContext;
@@ -62,6 +62,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     private static ProgressDialog mSaveDialog = null;
 
     boolean isShowSave;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -70,7 +71,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
         currentItem = getIntent().getIntExtra("currentIndex", 0);
         imgUrlArr = getIntent().getStringArrayExtra("imgUrlArr");
-        isShowSave = getIntent().getBooleanExtra("isShowSave",false);
+        isShowSave = getIntent().getBooleanExtra("isShowSave", false);
 
         mPager = (ViewPager) findViewById(R.id.viewpager);
         ViewsMap = new HashMap<String, View>();
@@ -83,12 +84,12 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
         tv_saveimg.setOnClickListener(MyListener);
         tv_close = (ImageView) findViewById(R.id.tv_close);
         tv_close.setOnClickListener(MyListener);
-        tv_num= (TextView) findViewById(R.id.tv_num);
-        tv_num.setText(currentItem+1+"/"+imgUrlArr.length);
+        tv_num = (TextView) findViewById(R.id.tv_num);
+        tv_num.setText(currentItem + 1 + "/" + imgUrlArr.length);
 
-        if(isShowSave){
+        if (isShowSave) {
             tv_saveimg.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tv_saveimg.setVisibility(View.GONE);
         }
 
@@ -106,10 +107,10 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
             if (v == tv_saveimg) {
                 String imgurl = imgUrlArr[currentItem];
 //                saveImg(imgurl, "jpg");
-                if(imgurl.startsWith("http")||imgurl.startsWith("https")){
+                if (imgurl.startsWith("http") || imgurl.startsWith("https")) {
                     saveImg(imgurl, "jpg");
-                }else{
-                    Toast.makeText(com.mogu.picturepreview.BigImgBrowse.this,"该图片为本地图片,无需保存",0).show();
+                } else {
+                    Toast.makeText(com.mogu.picturepreview.BigImgBrowse.this, "该图片为本地图片,无需保存", 0).show();
                 }
                 return;
             }
@@ -225,11 +226,39 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
     @Override
     public void close_view() {
-        finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        // finish();
+        // overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-
+        /** modify by David at 2019-06-10 start   */
+        // android 6.0 关闭后返回MainActivity 闪退问题
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        }, 300); // 延时
+        /** modify by David at 2019-06-10 end   */
     }
+
+    /**
+     * modify by David at 2019-06-10 start
+     */
+    // android 6.0 关闭后返回MainActivity 闪退问题
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        }, 300); // 延时
+    }
+
+    /**
+     * modify by David at 2019-06-10 end
+     */
 
     OnPageChangeListener pageChange = new OnPageChangeListener() {
 
@@ -239,7 +268,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
             currentItem = arg0;
 //            AppUtils.noneselsect(arg0, imageViews);
-            tv_num.setText(currentItem+1+"/"+imgUrlArr.length);
+            tv_num.setText(currentItem + 1 + "/" + imgUrlArr.length);
 
         }
 
