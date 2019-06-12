@@ -237,9 +237,28 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        }, 500); // 延时
+        }, 300); // 延时
         /** modify by David at 2019-06-10 end   */
     }
+
+    /**
+     * modify by David at 2019-06-10 start
+     */
+    // android 6.0 关闭后返回MainActivity 闪退问题
+    @Override
+    public void onBackPressed() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        }, 300); // 延时
+    }
+
+    /**
+     * modify by David at 2019-06-10 end
+     */
 
     OnPageChangeListener pageChange = new OnPageChangeListener() {
 
