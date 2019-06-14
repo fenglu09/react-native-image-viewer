@@ -1,5 +1,6 @@
 package com.mogu.picturepreview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,11 +10,13 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,8 +33,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.os.Handler;
 
 
 public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageViewInterface {
@@ -105,6 +106,16 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
                 return;
             }
             if (v == tv_saveimg) {
+                /** add by david 2019-6-13 start  */
+                //添加权限判断
+                String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                int permission_result = PermissionChecker.checkPermission(BigImgBrowse.this, perms[0], android.os.Process.myPid(), android.os.Process.myUid(), BigImgBrowse.this.getPackageName());
+                if (permission_result != PermissionChecker.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) BigImgBrowse.this, perms, 100);
+                    return;
+                }
+                /** add by david 2019-6-13 end  */
+
                 String imgurl = imgUrlArr[currentItem];
 //                saveImg(imgurl, "jpg");
                 if (imgurl.startsWith("http") || imgurl.startsWith("https")) {
@@ -237,7 +248,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        }, 300); // 延时
+        }, 500); // 延时
         /** modify by David at 2019-06-10 end   */
     }
 
@@ -253,7 +264,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        }, 300); // 延时
+        }, 500); // 延时
     }
 
     /**
