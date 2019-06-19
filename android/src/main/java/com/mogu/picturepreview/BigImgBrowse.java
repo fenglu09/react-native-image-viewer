@@ -63,6 +63,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     private static ProgressDialog mSaveDialog = null;
 
     boolean isShowSave;
+    boolean isfinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,13 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
         } else {
             tv_saveimg.setVisibility(View.GONE);
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isfinish = true;
+            }
+        }, 1000);
 
     }
 
@@ -242,13 +250,11 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
         /** modify by David at 2019-06-10 start   */
         // android 6.0 关闭后返回MainActivity 闪退问题
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, 500); // 延时
+
+        if (isfinish) {
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
         /** modify by David at 2019-06-10 end   */
     }
 
@@ -258,13 +264,11 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     // android 6.0 关闭后返回MainActivity 闪退问题
     @Override
     public void onBackPressed() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, 500); // 延时
+//
+        if (isfinish) {
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
     }
 
     /**
