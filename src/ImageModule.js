@@ -2,10 +2,7 @@ import { NativeModules, Platform } from 'react-native'
 
 const { PicturePreview } = NativeModules
 
-export function openPreview(imageData, index) {
-    if(index) {
-        PicturePreview.openPreview(imageData, index)
-    } else { 
-        PicturePreview.openPreview(imageData, 0) 
-    }
+export function openPreview(imageData, index = 0, save = true) {
+
+		PicturePreview.openPreview(imageData, index, save)
 }
