@@ -1,5 +1,6 @@
 package com.mogu.picturepreview;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,11 +10,13 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,8 +33,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.os.Handler;
 
 
 public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageViewInterface {
@@ -62,6 +63,7 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     private static ProgressDialog mSaveDialog = null;
 
     boolean isShowSave;
+    boolean isfinish = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,13 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
             tv_saveimg.setVisibility(View.GONE);
         }
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isfinish = true;
+            }
+        }, 1000);
+
     }
 
     private View.OnClickListener MyListener = new View.OnClickListener() {
@@ -105,6 +114,16 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
                 return;
             }
             if (v == tv_saveimg) {
+                /** add by david 2019-6-13 start  */
+                //添加权限判断
+                String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                int permission_result = PermissionChecker.checkPermission(BigImgBrowse.this, perms[0], android.os.Process.myPid(), android.os.Process.myUid(), BigImgBrowse.this.getPackageName());
+                if (permission_result != PermissionChecker.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) BigImgBrowse.this, perms, 100);
+                    return;
+                }
+                /** add by david 2019-6-13 end  */
+
                 String imgurl = imgUrlArr[currentItem];
 //                saveImg(imgurl, "jpg");
                 if (imgurl.startsWith("http") || imgurl.startsWith("https")) {
@@ -231,13 +250,11 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
 
         /** modify by David at 2019-06-10 start   */
         // android 6.0 关闭后返回MainActivity 闪退问题
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, 300); // 延时
+
+        if (isfinish) {
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
         /** modify by David at 2019-06-10 end   */
     }
 
@@ -247,13 +264,11 @@ public class BigImgBrowse extends Activity implements ZoomImageView.ZoomImageVie
     // android 6.0 关闭后返回MainActivity 闪退问题
     @Override
     public void onBackPressed() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        }, 300); // 延时
+//
+        if (isfinish) {
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
     }
 
     /**

@@ -1,11 +1,13 @@
 package com.mogu.picturepreview;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
-import android.app.Activity;
-import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -44,9 +46,19 @@ public class PicturePreview extends ReactContextBaseJavaModule {
 
 
     @ReactMethod
-    public void openPreview(ReadableArray array,int index,boolean isShowSave)
+    public void openPreview(ReadableArray array, int index, boolean isShowSave)
 
     {
+        /** add by david 2019-6-13 start  */
+        //添加权限判断
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        int permission_result = PermissionChecker.checkPermission(getCurrentActivity(), perms[0], android.os.Process.myPid(), android.os.Process.myUid(), getCurrentActivity().getPackageName());
+        if (permission_result != PermissionChecker.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) getCurrentActivity(), perms, 100);
+            return;
+        }
+        /** add by david 2019-6-13 end  */
+
         Context context = getCurrentActivity();
         initImageLoader(context);
 
@@ -58,7 +70,7 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         }
 
         /*add by david model处理 start*/
-        activityhide((Activity)context);
+        activityhide((Activity) context);
         /*add by david model处理 end*/
 
         Intent intent = new Intent(context, BigImgBrowse.class);
@@ -69,7 +81,6 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
     }
-
 
 
     public void activityhide(final Activity activity) {
@@ -96,8 +107,6 @@ public class PicturePreview extends ReactContextBaseJavaModule {
         }, 1000);
 
     }
-
-
 
 
     public void initImageLoader(Context context) {
