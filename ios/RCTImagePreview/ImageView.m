@@ -82,7 +82,7 @@
     UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:_browser];
 
     nc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
+    nc.modalPresentationStyle = UIModalPresentationFullScreen;
     [[self getPresentedViewController] presentViewController:nc animated:YES completion:nil];
 }
 
